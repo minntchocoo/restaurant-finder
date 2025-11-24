@@ -1,5 +1,4 @@
 
-````markdown
 # LLM-Driven Restaurant Finder API
 
 A small Node.js + TypeScript API that uses an LLM (Google Gemini) to turn a free-form text request into a structured JSON command, then calls the Foursquare Places API to find matching restaurants.
