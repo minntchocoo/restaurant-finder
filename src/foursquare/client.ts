@@ -7,7 +7,7 @@ import type { RestaurantSearchParameters } from "../types";
 // ✅ NEW base URL (no /v3, new host)
 const FSQ_BASE_URL = "https://places-api.foursquare.com/places/search";
 
-const fsqApiKey = process.env.FSQ_API_KEY;
+const fsqApiKey: string = process.env.FSQ_API_KEY ?? "";
 
 if (!fsqApiKey) {
   throw new Error("FSQ_API_KEY is not set in .env");
