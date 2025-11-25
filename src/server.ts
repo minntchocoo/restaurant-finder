@@ -12,7 +12,6 @@ const port = process.env.PORT || 3000;
 // expected access code (read from .env)
 const ACCESS_CODE = process.env.API_ACCESS_CODE || "pioneerdevai";
 
-// Health check
 app.get("/", (_req, res) => {
   res.send("Restaurant Finder API is running ");
 });
@@ -42,21 +41,11 @@ app.get("/api/execute", async (req, res) => {
       command.parameters
     );
 
-    // 5. Optionally filter by min_rating (client-side)
-    let filtered = fsqResults;
-//    if (command.parameters.min_rating) {
-//      const min = command.parameters.min_rating;
-//      filtered = fsqResults.filter(
-//        (place) =>
-//          typeof place.rating === "number" && place.rating >= (min ?? 0)
-//      );
-//    }
-
-    // 6. Return a clean JSON response
+    // 5. Return a clean JSON response
     return res.json({
       query: message,
       command,
-      results: filtered.map((place) => ({
+      results: fsqResults.map((place) => ({
         id: place.fsq_place_id ?? place.fsq_id, // support both
         name: place.name,
         address: place.location?.address,
@@ -64,7 +53,6 @@ app.get("/api/execute", async (req, res) => {
         region: place.location?.region,
         country: place.location?.country,
         categories: place.categories?.map((c) => c.name),
-      
       })),
     });
   } catch (err: any) {

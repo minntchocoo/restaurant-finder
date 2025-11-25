@@ -4,7 +4,7 @@ dotenv.config();
 
 import type { RestaurantSearchParameters } from "../types";
 
-// ✅ NEW base URL (no /v3, new host)
+// NEW base URL (no /v3)
 const FSQ_BASE_URL = "https://places-api.foursquare.com/places/search";
 
 const fsqApiKey: string = process.env.FSQ_API_KEY ?? "";
@@ -13,7 +13,7 @@ if (!fsqApiKey) {
   throw new Error("FSQ_API_KEY is not set in .env");
 }
 
-// 🔍 Debug: show that we actually loaded the key
+// Debug: showing that key is loaded
 console.log(
   "[FSQ] FSQ_API_KEY loaded?",
   fsqApiKey ? fsqApiKey.slice(0, 5) + "..." : "undefined",
@@ -55,7 +55,7 @@ export async function searchRestaurantsFromFoursquare(
     ["fsq_place_id", "name", "location", "categories"].join(",")
   );
 
-  // 🔍 Debug: log the outgoing request (safe version)
+  // Debug: log the outgoing request (safe version)
   console.log("[FSQ] Request URL:", url.toString());
   console.log(
     "[FSQ] Request headers:",
@@ -69,14 +69,14 @@ export async function searchRestaurantsFromFoursquare(
   const res = await fetch(url.toString(), {
     headers: {
       Accept: "application/json",
-      // ✅ NEW auth format: Bearer + service key
+      //  NEW auth format: Bearer + service key
       Authorization: `Bearer ${fsqApiKey}`,
-      // ✅ NEW version header
+      // NEW version header
       "X-Places-Api-Version": "2025-06-17",
     },
   });
 
-  // 🔍 Debug: log status code
+  // Debug: log status code
   console.log("[FSQ] Response status:", res.status);
 
   if (!res.ok) {
